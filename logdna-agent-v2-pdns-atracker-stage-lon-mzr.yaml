@@ -1,0 +1,7 @@
+#
+# (C) Copyright IBM Corp. 2021.
+#
+
+app:
+  repository: icr.io/ext/logdna-agent
+  tag: 2.2.0
