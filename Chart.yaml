@@ -1,0 +1,7 @@
+#
+# (C) Copyright IBM Corp. 2021.
+#
+apiVersion: v1
+name: logdna-agent
+version: 0.0.0
+description: LogDNA agent chart for Private DNS.
