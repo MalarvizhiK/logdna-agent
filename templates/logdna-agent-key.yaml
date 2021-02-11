@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: logdna-agent-key
+  namespace: ibm-observe
+type: Opaque
+data:
+  logdna-agent-pdns-key: LOL
+  logdna-agent-cis-key: LOL
+

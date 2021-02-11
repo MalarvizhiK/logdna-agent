@@ -1,0 +1,86 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: logdna-agent-pdns
+  namespace: ibm-observe
+spec:
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: logdna-agent
+  template:
+    metadata:
+      labels:
+        app: logdna-agent
+    spec:
+      containers:
+        - name: logdna-agent-pdns-logs
+          image: {{ .Values.app.repository }}:{{ .Values.app.tag }}
+          imagePullPolicy: Always
+          env:
+            - name: LOGDNA_AGENT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: logdna-agent-key
+                  key: logdna-agent-pdns-key
+            - name: LOGDNA_API_HOST
+              value: api.private.eu-de.logging.cloud.ibm.com
+            - name: LOGDNA_HOST
+              value: logs.private.eu-de.logging.cloud.ibm.com
+            - name: LOGDNA_ENDPOINT
+              value: /supertenant/logs/ingest
+            - name: LOGDNA_EXCLUDE
+              value: /var/log/at/*,/var/log/containers/*_default_*,/var/log/containers/*_cis_*,/var/log/containers/*_ibm-cert-store_*,/var/log/containers/*_ibm-observe_*,/var/log/containers/*_ibm-operators_*,/var/log/containers/*_ibm-services-system_*,/var/log/containers/*_ibm-system_*,/var/log/containers/*_kube-node-lease_*,/var/log/containers/*_kube-public_*,/var/log/containers/*_kube-system_*,/var/log/containers/*_observability_*,/var/log/containerd.log,/var/log/kubelet.log,/var/log/syslog,/var/log/ntpstats/*,/var/log/alb/*
+            - name: RUST_LOG
+              value: info
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          resources:
+            requests:
+              cpu: 20m
+            limits:
+              memory: 500Mi
+          volumeMounts:
+            - name: varlog
+              mountPath: /var/log
+            - name: vardata
+              mountPath: /var/data
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - name: mnt
+              mountPath: /mnt
+              readOnly: true
+            - name: osrelease
+              mountPath: /etc/os-release
+            - name: logdnahostname
+              mountPath: /etc/logdna-hostname
+      volumes:
+        - name: varlog
+          hostPath:
+            path: /var/log
+        - name: vardata
+          hostPath:
+            path: /var/data
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: mnt
+          hostPath:
+            path: /mnt
+        - name: osrelease
+          hostPath:
+            path: /etc/os-release
+        - name: logdnahostname
+          hostPath:
+            path: /etc/hostname
