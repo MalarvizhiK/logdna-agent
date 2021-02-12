@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: logdna-agent-pdns-logs
-          image: {{ .Values.app.repository }}:{{ .Values.app.tag }}
+          image: {{ .Values.supertenant-app.repository }}:{{ .Values.supertenant-app.tag }}
           imagePullPolicy: Always
           env:
             - name: LOGDNA_AGENT_KEY
