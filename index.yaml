@@ -1,3 +1,12 @@
 apiVersion: v1
-entries: {}
-generated: "2021-02-11T12:22:40.694537+05:30"
+entries:
+  logdna-agent:
+  - apiVersion: v1
+    created: "2021-02-11T13:30:38.718746+05:30"
+    description: LogDNA agent chart for Private DNS.
+    digest: 573e4ecc9f0bc38d34defb2b922f6d27916b3511ec1c1497762b8001adc43a93
+    name: logdna-agent
+    urls:
+    - https://malarvizhik.github.io/logdna-agent/logdna-agent-0.0.0.tgz
+    version: 0.0.0
+generated: "2021-02-11T13:30:38.714179+05:30"
