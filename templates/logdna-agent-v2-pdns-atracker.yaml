@@ -19,7 +19,7 @@ spec:
       serviceAccountName: logdna-agent
       containers:
         - name: logdna-agent-pdns-atracker
-          image: {{ .Values.atracker-app.repository }}:{{ .Values.atracker-app.tag }}
+          image: {{ .Values.atracker_app.repository }}:{{ .Values.atracker_app.tag }}
           imagePullPolicy: Always
           env:
             - name: LOGDNA_AGENT_KEY

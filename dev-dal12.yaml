@@ -2,10 +2,10 @@
 # (C) Copyright IBM Corp. 2021.
 #
 
-atracker-app:
+atracker_app:
   repository: icr.io/ext/logdna-agent
   tag: 2.2.0
 
-supertenant-app:
+supertenant_app:
   repository: icr.io/ext/logdna-agent
   tag: 2.2.0
